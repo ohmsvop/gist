@@ -1,0 +1,126 @@
+# print working directory
+pwd
+
+# listing
+ls
+ls -l # long
+ls -R # deeply
+ls -a # all files
+ls -t # sort by time
+ls -r # reverse
+ls -F # a / after the name of every directory and 
+        a * after the name of every runnable program
+	a @ after the name of every link
+
+# permission
+type user group other
+
+- regular file
+d directory
+l symbolic link
+
+r read
+w write
+x execute
+
+u user
+g group
+o other
+a all
+
+chmod	change mode command
++-=
+eg: u+x, a=rx
+octal --- 0, --x 1, -w- 2, -wx 3, r-- 4, r-x 5, rw- 6, rwx 7
+
+chgrp	change group
+default: dir 777, file 666 - umask 0022 = dir 755, file 644
+
+# change directory
+cd
+. the current directory
+.. the parent directory
+~ home directory
+- previous directory
+
+# copy
+cp
+
+# move (also rename)
+mv
+
+# make directory
+mkdir
+
+# concatenate
+cat
+more, less
+q # quit
+:n # next
+:p # previous
+
+# first 10 lines of a file 
+head
+
+# manual
+man
+
+# select column
+cut
+
+# rerun
+history
+!head
+!3
+
+# search
+grep
+-c: print a count of matching lines rather than the lines themselves
+-h: do not print the names of files when searching multiple files
+-i: ignore case (e.g., treat "Regression" and "regression" as matches)
+-l: print the names of files that contain matches, not the matches
+-n: print line numbers for matching lines
+-v: invert the match, i.e., only show lines that don't match
+
+# redirect output 
+>
+
+# pipe
+|
+
+# word count
+wc
+
+# wildcards
+*
+
+# sort
+sort
+
+# unique
+uniq # only applies to adjacent lines
+
+# stop
+^C
+
+# find a variable's value
+echo
+
+# environment variables
+$USER
+$PATH
+
+# shell variable
+training=seasonal/summer.csv
+
+# for loop
+for filename in seasonal/*.csv; do echo $filename; done
+
+# run shell script
+bash
+
+# all of the command-line parameters given to the script
+$@
+
+# single argument
+$1, $2

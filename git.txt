@@ -1,0 +1,32 @@
+git status
+git add
+git commit -m
+git diff
+git log
+git log $path
+git show
+git diff HEAD~1..HEAD~3
+.gitignore
+git config --list --local
+git checkout -- filename # undo files that have not been staged
+git reset HEAD filename # undo files that have benn staged
+git checkout $ID
+git branch
+git diff branch-1..branch-2
+git checkout branch-name
+git checkout -b branch-name # create new branch
+git merge source destination
+<<<<<<< destination-branch-name
+...changes from the destination branch...
+=======
+...changes from the source branch...
+>>>>>>> source-branch-name
+git init project-name
+git clone URL
+git remote -v
+git remote add remote-name URL
+git remote rm remote-name
+git pull remote branch
+git push remote-name branch-name
+
+
