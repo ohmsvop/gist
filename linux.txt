@@ -8,8 +8,8 @@ ls -R # deeply
 ls -a # all files
 ls -t # sort by time
 ls -r # reverse
-ls -F # a / after the name of every directory and 
-        a * after the name of every runnable program
+ls -F #	a / after the name of every directory and 
+	a * after the name of every runnable program
 	a @ after the name of every link
 
 # permission
@@ -43,11 +43,27 @@ cd
 ~ home directory
 - previous directory
 
+# find
+find [path] [expression]
+locate (fast but not in realtime)
+
 # copy
 cp
 
 # move (also rename)
 mv
+
+# file collections
+tar
+c create a tar archive
+x extract files from the archive
+t display the table of contents
+v verbose
+z compression
+f file use this file
+
+# disk usage
+du -h
 
 # make directory
 mkdir
@@ -55,12 +71,10 @@ mkdir
 # concatenate
 cat
 more, less
+head # first 10 lines of a file 
 q # quit
 :n # next
 :p # previous
-
-# first 10 lines of a file 
-head
 
 # manual
 man
@@ -83,7 +97,16 @@ grep
 -v: invert the match, i.e., only show lines that don't match
 
 # redirect output 
->
+>  overwrite
+>> append
+< 
+
+# I/O types
+Standard Input stdin 0
+Standard Output stdout 1
+Standard Error stderr 2
+2>&1 both stdout and stderr
+/dev/null null device
 
 # pipe
 |
@@ -93,6 +116,7 @@ wc
 
 # wildcards
 *
+?
 
 # sort
 sort
@@ -124,3 +148,11 @@ $@
 
 # single argument
 $1, $2
+
+# compare
+diff 
+sdiff
+vimdiff
+< line from file1
+> line from file2
+
