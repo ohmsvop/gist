@@ -127,10 +127,11 @@ uniq # only applies to adjacent lines
 # stop
 ^C
 
-# find a variable's value
-echo
-
 # environment variables
+printenv VAR
+echo $VAR
+export VAR='value'
+unset VAR
 $USER
 $PATH
 
@@ -156,3 +157,6 @@ vimdiff
 < line from file1
 > line from file2
 
+# copy files over Network
+scp
+sftp
