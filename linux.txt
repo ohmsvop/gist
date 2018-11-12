@@ -82,11 +82,6 @@ man
 # select column
 cut
 
-# rerun
-history
-!head
-!3
-
 # search
 grep
 -c: print a count of matching lines rather than the lines themselves
@@ -124,9 +119,6 @@ sort
 # unique
 uniq # only applies to adjacent lines
 
-# stop
-^C
-
 # environment variables
 printenv VAR
 echo $VAR
@@ -160,3 +152,68 @@ vimdiff
 # copy files over Network
 scp
 sftp
+
+# listing processes
+ps
+-p pid
+-f full
+-e all
+-u user
+
+# background and foreground
+command & start command in background
+ctrl-c kill the foreground process
+ctrl-z suspend the foreground process
+bg [%num] background
+fg [%num] foreground
+kill
+jobs [%% %+ %-]list jobs
+
+# schedule job
+crontab
+-l list
+-e edit
+* * * * * min hr date mon day
+
+# change user
+su [username] switch user
+whoami
+sudo super user do
+visudo edit the sudoers file
+
+# history
+history display the shell history
+!N repeat command line number N
+!! repeat the previous command line
+!:N (!^ !$) previous partial command
+ctrl-r reverse shell history search 
+
+# package
+RPM
+yum install package
+rpm
+DEB
+apt-get install package ubuntu
+dpkg
+
+# disk
+df -h
+fdisk -l
+fdisk /dev/sdb
+mount /dev/sdb2 path
+umount device or mount point
+
+# LVM
+lvmdiskscan
+lsblk
+pvcreate /dev/sdb
+pvs
+vgcreate vg_app /dev/sdb
+vgs
+lvcreate -n lv_data -L 20G vg_app
+lvs
+lvdisplay
+mkfs -t ext4 /dev/vg_app/lv_data
+mkdir /data
+mount /dev/vg_app/lv_data / data
+/etc/fstab
