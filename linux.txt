@@ -127,21 +127,6 @@ unset VAR
 $USER
 $PATH
 
-# shell variable
-training=seasonal/summer.csv
-
-# for loop
-for filename in seasonal/*.csv; do echo $filename; done
-
-# run shell script
-bash
-
-# all of the command-line parameters given to the script
-$@
-
-# single argument
-$1, $2
-
 # compare
 diff 
 sdiff
@@ -186,6 +171,8 @@ history display the shell history
 !N repeat command line number N
 !! repeat the previous command line
 !:N (!^ !$) previous partial command
+!string repeat command line start with the string
+!* repeat parameters
 ctrl-r reverse shell history search 
 
 # package
@@ -206,14 +193,79 @@ umount device or mount point
 # LVM
 lvmdiskscan
 lsblk
-pvcreate /dev/sdb
 pvs
-vgcreate vg_app /dev/sdb
 vgs
-lvcreate -n lv_data -L 20G vg_app
 lvs
 lvdisplay
+pvcreate /dev/sdb
+vgcreate vg_name /dev/sdb
+lvcreate -n lv_name -L 20G vg_name
 mkfs -t ext4 /dev/vg_app/lv_data
 mkdir /data
 mount /dev/vg_app/lv_data / data
 /etc/fstab
+vgextend vg_name /dev/sdc
+lvextend -L +20G -r /dev/vg_name/lv_name
+lvremove /dev/vg_name/lv_name
+vgremove vg_name
+pvremove /dev/sbd
+vgreduce vg_name /dev/sbd
+pvmove
+
+# user
+/etc/passwd
+username:password:UID:GID:comments:home_dir:shell
+root:x:0:0:root:/root:/bin/bash
+/etc/shadow # save password
+useradd username
+-c "COMMENT"
+-m create home directory
+-s shell
+passwd username
+userdel username
+usermod username
+/etc/group
+groupname:password:GID:account1,accountN
+groupadd groupname
+groupdel groupname
+groupmod groupname
+groups
+
+# ip
+ip address
+ifconfig
+hostname
+host url
+/etc/hosts
+ip FQDN alias
+
+# network
+/etc/services
+ping host
+traceroute -n host
+netstat
+
+# shell script
+#!/bin/bash
+var="value"
+$var or ${var}
+var=$(command)
+
+if [ condition ]
+then
+    command
+elif [condition ]
+then
+    command
+else
+    command
+fi
+
+for var in item itemN
+do
+    command
+done
+
+# positional parameter
+$1, $2, ..., $9
+$@ all
