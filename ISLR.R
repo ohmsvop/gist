@@ -55,3 +55,68 @@ library(class)
 knn.pred=knn(train.X, test.X, train.y, k=50)
 #table(knn.pred, test.y)
 mean(knn.pred==test.y)
+
+# Cross-Validation
+library(boot)
+cv.error.10=rep(0,10)
+for (i in 1:10){
+  glm.fit=glm(y~poly(X, i), data)
+  cv.error.10[i]=cv.glm(data, glm.fit, K=10)$delta[1]
+}
+
+# Bootstrap
+boot(data, statistic, R=1000)
+
+# Best Subset Selection
+library(leaps)
+regfit.full=regsubsets(y~., data, nvmax)
+reg.summary=summary(regfit.full)
+plot(reg.summary$bic, xlab="Number of Variables", ylab="BIC", type='l')
+n = which.min(reg.summary$bic)
+points(n, reg.summary$bic[n], col="red", cex=2, pch=20)
+
+# Forward and Backward Stepwise Selection
+regfit.fwd=regsubsets(y~., data, nvmax, method="forward")
+summary(regfit.fwd)
+regfit.bwd=regsubsets(y~., data, nvmax, method="backward")
+summary(regfit.bwd)
+
+# Ridge Regression
+library(glmnet)
+ridge.mod=glmnet(x[train,], y[train], alpha=0, lambda=grid, thresh=1e-12)
+plot(ridge.mod)
+cv.out=cv.glmnet(x[train,], y[train], alpha=0)
+plot(cv.out)
+bestlam=cv.out$lambda.min
+ridge.pred=predict(ridge.mod, s=bestlam, newx=x[test,])
+mean((ridge.pred-y.test)^2)
+out=glmnet(x, y, alpha=0)
+predict(out, type="coefficients", s=bestlam)[1:20,]
+
+# Lasso
+lasso.mod=glmnet(x[train,], y[train], alpha=1, lambda=grid)
+plot(lasso.mod)
+cv.out=cv.glmnet(x[train,],y[train],alpha=1)
+plot(cv.out)
+bestlam=cv.out$lambda.min
+lasso.pred=predict(lasso.mod, s=bestlam, newx=x[test,])
+mean((lasso.pred-y.test)^2)
+out=glmnet(x, y, alpha=1, lambda=grid)
+lasso.coef=predict(out, type="coefficients", s=bestlam)[1:20,]
+lasso.coef[lasso.coef!=0]
+
+# Principal Components Regression
+library(pls)
+pcr.fit=pcr(y~., data, scale=TRUE, validation ="CV")
+summary(pcr.fit)
+validationplot(pcr.fit, val.type="MSEP")
+pcr.fit=pcr(y~., data, subset=train, scale=TRUE, validation ="CV")
+pcr.pred=predict(pcr.fit, x[test,], ncomp)
+mean((pcr.pred-y.test)^2)
+
+# Partial Least Squares
+pls.fit=plsr(y~., data, subset=train, scale=TRUE, validation ="CV")
+summary(pls.fit)
+validationplot(pls.fit, val.type="MSEP")
+pls.pred=predict(pls.fit, x[test,], ncomp=2)
+mean((pls.pred-y.test)^2)
