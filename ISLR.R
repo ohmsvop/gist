@@ -120,3 +120,17 @@ summary(pls.fit)
 validationplot(pls.fit, val.type="MSEP")
 pls.pred=predict(pls.fit, x[test,], ncomp=2)
 mean((pls.pred-y.test)^2)
+
+# Splines
+library(splines)
+bs(x, knots)
+ns(x)
+fit=smooth.spline(x, y, cv=TRUE)
+fit=loess(y~x, span, data)
+
+# GAM
+library(gam)
+s() # smoothing spline
+lo() # local regression
+gam()
+plot.gam()
