@@ -6,6 +6,7 @@ dim(df)
 names(df)
 attach(df)
 as.factor(data)
+is.na(data)
 pairs(df)
 summary(df)
 hist(data)
@@ -134,3 +135,53 @@ s() # smoothing spline
 lo() # local regression
 gam()
 plot.gam()
+
+# Tree
+library(tree)
+tree.data = tree(y~., data, subset=train)
+summary(tree.data)
+plot(tree.data)
+text(tree.data, pretty = 0)
+
+cv.data = cv.tree(tree.data)
+plot(cv.data$size, cv.data$dev, type='b')
+
+prune.data = prune.tree(tree.data, best)
+plot(prune.data)
+text(prune.data, pretty = 0)
+
+pred.data = predict(tree.data, newdata=data[-train,])
+data.test=data[-train, y]
+mean((data.test - pred.data)^2)
+
+# Bagging and Random Forests
+library(randomForest)
+bag.data=randomForest(y~., data, subset=train, mtry, ntree, importance=TRUE)
+pred.bag = predict(bag.data, newdata=data[-train,])
+mean((pred.bag-data.test)^2)
+
+importance(bag.data)
+varImpPlot(bag.data)
+
+# Boosting
+library(gbm)
+boost.data=gbm(y~., data[train,], distribution="gaussian")
+summary(boost.data)
+
+# SVM
+library(e1071)
+svmfit=svm(y~., data, kernel, cost)
+plot(svmfit, data)
+summary(svmfit)
+tune.out=tune(svm, y~., data, kernel,
+  ranges=list(cost=c(0.1,1,10,100,1000),gamma=c(0.5,1,2,3,4)))
+
+# ROC
+library(ROCR)
+rocplot=function(pred, truth, ...)
+{predob = prediction (pred, truth)
+  perf = performance (predob , "tpr", "fpr")
+  plot(perf ,...)}
+svmfit.opt=svm(y~., data=dat[train,], kernel="radial", gamma=2, cost=1, decision.values=T)
+fitted=attributes(predict(svmfit.opt,dat[train,], decision.values=TRUE))$decision.values
+rocplot(fitted, dat[train, "y"], main="Training Data")
