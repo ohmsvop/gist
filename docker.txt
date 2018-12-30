@@ -1,0 +1,13 @@
+docker run {image}:lastest
+    -d background
+    -p {host-port}:{container-port}
+
+docer ps
+
+docker stop {container-id}
+
+docker images
+
+docer rmi -f image
+
+docker exec -it {container-id} /bin/bash
